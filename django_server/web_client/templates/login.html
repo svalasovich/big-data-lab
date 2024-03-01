@@ -1,0 +1,63 @@
+{% extends "home_template.html" %}
+
+{% block title %}Login{% endblock title %}
+
+{% block load_style %}
+<style>
+body {
+    background-image: url({{request.tenant.background_image}});
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+.main_div {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+.center_div {
+    position: absolute;
+    top: 10%;
+}
+
+.form_div {
+    margin: 2% 0;
+}
+
+.center_content {
+    display: flex;
+    justify-content: center;
+}
+
+.reg_button {
+    width: 30%;
+}
+</style>
+{% endblock load_style %}
+
+{% block main %}
+<form method="POST" class="row main_div" action="login">
+    {% csrf_token %}
+    <div class="form-group col-3 center_div">
+        <h1 class="display-1 font-weight-bold text-center">WNews</h1>
+        <div class="form_div">
+            <label for="cur_email">Email</label>
+            <input type="email" class="form-control" id="cur_email" name="email_id" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="form_div form-group">
+            <label for="cur_pass">Password</label>
+            <input type="password" class="form-control" id="cur_pass" name="password_id" placeholder="Password">
+        </div>
+        <div class="form_div center_content">
+            <button type="submit" class="btn btn-dark reg_button" name="login">Submit</button>
+        </div>
+        <div class="form_div center_content">
+            <button type="submit" class="btn btn-dark reg_button" name="registration">Registration</button>
+        </div>
+    </div>
+</form>
+{% endblock main %}

@@ -1,0 +1,68 @@
+{% extends "home_template.html" %}
+
+{% block title %}News{% endblock title %}
+
+{% block load_style %}
+<style>
+.blocks .btn {
+    margin: 0 5px;
+    border-radius: 5;
+}
+
+.news_div {
+    margin: 1% 0;
+}
+
+body {
+    background-image: url({{request.tenant.background_image}});
+    background-repeat: repeat;
+    width: 100%;
+    justify-content: center;
+}
+</style>
+{% endblock load_style %}
+
+{% block main %}
+<div class="main-container">
+    <div class="row align-items-end justify-content-between">
+        <div class="col-2 offset-1 display-2">WNews</div>
+        <form method="GET" class="col-4 offset-2" action="select_tag">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-primary" name="all">All</button>
+            <button type="submit" class="btn btn-outline-success" name="economy">Economy</button>
+            <button type="submit" class="btn btn-outline-danger" name="sport">Sport</button>
+            <button type="submit" class="btn btn-outline-dark" name="politics">Politics</button>
+            <button type="submit" class="btn btn-outline-warning" name="musics">Music</button>
+            <button type="submit" class="btn btn-outline-info" name="films">Films</button>
+            <button type="submit" class="btn btn-outline-secondary" name="science">Science</button>
+        </form>
+        <form method="GET" class="col-2" action="logout">
+            {% csrf_token %}
+            <h5>Hello, <strong>{{ request.user.username }}</strong></h5>
+            <img src="https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile.png"
+                     alt="Avatar" style="width: 50px;" class="rounded-circle"/>
+            <button type="submit" class="btn btn-outline-dark">Logout</button>
+        </form>
+    </div>
+
+    <div class="row row-cols-5 g-4 news_div">
+        {% for article in articles %}
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-header text-right">
+                    <small class="text-muted">Date: {{article.last_update}}</small>
+                </div>
+                <img src="{{article.image_link}}" class="card-img-top h-20" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{article.title}}</h5>
+                    <p class="card-text">{{article.text}}</p>
+                </div>
+                <div class="card-footer text-right">
+                    <a href="{{article.article_link}}" class="card-link">Read more...</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock main %}
